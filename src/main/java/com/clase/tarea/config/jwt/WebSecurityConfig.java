@@ -23,7 +23,7 @@ public class WebSecurityConfig {
     private final JwtAuthenticate jwtAuthenticate;
     private final AuthenticationProvider authenticationProvider;
 
-    private final String[] publicRequest = {"/api/auth/**"};
+    private final String[] publicRequest = {"/swagger-ui/**" , "/api-docs/**", "/api/auth/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
