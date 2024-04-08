@@ -1,8 +1,8 @@
 package com.clase.tarea.service;
 
-import com.clase.tarea.model.Producto;
+import com.clase.tarea.model.Products;
 import com.clase.tarea.model.Response;
-import com.clase.tarea.repository.IProductoRepositorio;
+import com.clase.tarea.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductoServicio {
+public class ProductService {
 
     @Autowired
-    private IProductoRepositorio iProductoRepositorio;
+    private IProductRepository iProductRepository;
 
-    public List<Producto> obtenerTodosProductos() {
-        return iProductoRepositorio.findAll();
+    public List<Products> getAllProducts() {
+        return iProductRepository.findAll();
     }
 
-    public ResponseEntity<Object> crearProducto(Producto producto){
+    public ResponseEntity<Object> createProduct(Products products){
 
-        iProductoRepositorio.save(producto);
+        iProductRepository.save(products);
 
         return ResponseEntity.status(200)
                 .body(
@@ -32,20 +32,20 @@ public class ProductoServicio {
                 );
     }
 
-    public Producto obtenerPorId(Long id){
-        return iProductoRepositorio.findById(id)
+    public Products getId(Long id){
+        return iProductRepository.findById(id)
                 .orElse(null);
     }
 
-    public ResponseEntity<Object> actualizarProducto(Long id, Producto producto){
-        Producto existeProducto = obtenerPorId(id);
-        if(iProductoRepositorio.existsById(id)){
-            existeProducto.setNombre(producto.getNombre());
-            existeProducto.setMarca(producto.getMarca());
-            existeProducto.setPrecio(producto.getPrecio());
-            existeProducto.setEstado(producto.getEstado());
+    public ResponseEntity<Object> updateProduct(Long id, Products products){
+        Products existProduct = getId(id);
+        if(iProductRepository.existsById(id)){
+            existProduct.setName(products.getName());
+            existProduct.setBrand(products.getBrand());
+            existProduct.setPrice(products.getPrice());
+            existProduct.setState(products.getState());
 
-            iProductoRepositorio.save(existeProducto);
+            iProductRepository.save(existProduct);
             return ResponseEntity.status(200)
                     .body(
                             Response.builder()
@@ -65,8 +65,8 @@ public class ProductoServicio {
 
     }
 
-    public void borrarProducto(Long id){
-        iProductoRepositorio.deleteById(id);
+    public void deleteProduct(Long id){
+        iProductRepository.deleteById(id);
     }
 
 }

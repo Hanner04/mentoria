@@ -7,26 +7,26 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
-@Table(name = "peliculas")
+@Table(name = "movies")
 @Getter
 @Setter
 @ToString
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductoPeliculas {
+public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @NotBlank(message = "Nombre es requerido")
-    private String nombre;
+    @NotBlank(message = "name is required")
+    private String name;
     @NotNull
-    private String autor;
+    private String author;
     @NotNull
-    private String genero;
+    private String gender;
     @NotNull
-    private double precio;
+    private double price;
     @NotNull
-    private String fechaLanzamiento;
+    private String date;
 }

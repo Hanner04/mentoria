@@ -12,25 +12,25 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name = "producto")
+@Table(name = "products ")
 @Getter
 @Setter
 @ToString
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Producto {
+public class Products {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @NotBlank(message = "Nombre es requerido")
-    private String nombre;
+    @NotBlank(message = "Name is required")
+    private String name;
     @NotNull
-    private String marca;
-    private double precio;
+    private String brand;
+    private double price;
     @NotNull
-    private String estado;
+    private String state;
 
 }
