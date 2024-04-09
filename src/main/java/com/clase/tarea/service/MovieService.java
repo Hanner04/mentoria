@@ -1,11 +1,12 @@
 package com.clase.tarea.service;
-
 import com.clase.tarea.model.Movie;
 import com.clase.tarea.model.Response;
 import com.clase.tarea.repository.IMovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
 
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class MovieService {
             return ResponseEntity.status(400)
                     .body(
                             Response.builder()
-                                    .code(200)
+                                    .code(400)
                                     .message("Sorry,I can't update the movie. It seems that the movie is not found in our database.")
                                     .build()
                     );
@@ -93,6 +94,17 @@ public class MovieService {
                                 .message("La película ha sido eliminada correctamente")
                                 .build()
                 );
+    }
+
+    public long calculateDaysSincePublication(Long id) {
+        Movie movie = iMovieRepository.findById(id).orElse(null);
+        if (movie != null) {
+            LocalDate publicationDate = LocalDate.parse(movie.getDate());
+            LocalDate currentDate = LocalDate.now();
+            return ChronoUnit.DAYS.between(publicationDate, currentDate);
+        } else {
+            return -1;
+        }
     }
 
 }

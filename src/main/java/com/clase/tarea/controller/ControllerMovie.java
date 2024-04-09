@@ -1,5 +1,6 @@
 package com.clase.tarea.controller;
 import com.clase.tarea.model.Movie;
+import com.clase.tarea.model.Response;
 import com.clase.tarea.service.MovieService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ControllerMovie {
     }
 
     @GetMapping("/getId/{id}")
-    public Movie getId (@PathVariable Long id){ return movieservice.getMovieId(id).getBody(); }
+    public Response getId (@PathVariable Long id){ return movieservice.getMovieId(id).getBody(); }
 
 
 
@@ -40,4 +41,10 @@ public class ControllerMovie {
     public void deleteMovie (@Valid @PathVariable Long id){
         movieservice.deleteMovie(id);
     }
+
+    @GetMapping("/getDaysSincePublication/{id}")
+    public long getDaysSincePublication(@PathVariable Long id) {
+        return movieservice.calculateDaysSincePublication(id);
+    }
+
 }
