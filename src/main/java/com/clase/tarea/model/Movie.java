@@ -1,36 +1,32 @@
 package com.clase.tarea.model;
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 
 @Entity
-@Table(name = "producto")
+@Table(name = "movies")
 @Getter
 @Setter
 @ToString
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Producto {
-
+public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @NotBlank(message = "Nombre es requerido")
-    private String nombre;
+    @NotBlank(message = "name is required")
+    private String name;
     @NotNull
-    private String marca;
-    private double precio;
+    private String author;
     @NotNull
-    private String estado;
-
+    private String gender;
+    @NotNull
+    private double price;
+    @NotNull
+    private String date;
 }
