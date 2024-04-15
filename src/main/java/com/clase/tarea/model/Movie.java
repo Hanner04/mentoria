@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "movies")
 @Getter
@@ -28,5 +30,7 @@ public class Movie {
     @NotNull
     private double price;
     @NotNull
-    private String date;
+    private Date date;
+
+    private Long sincePublication;
 }

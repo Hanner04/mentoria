@@ -39,9 +39,5 @@ public class ControllerMovie {
         movieservice.deleteMovie(id);
     }
 
-    @GetMapping("/getDaysSincePublication/{id}")
-    public long getDaysSincePublication(@PathVariable Long id) {
-        return movieservice.calculateDaysSincePublication(id);
-    }
 
 }

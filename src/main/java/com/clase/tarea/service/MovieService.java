@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,6 +35,7 @@ public class MovieService {
     public ResponseEntity<Movie> getMovieId(Long id) {
         Movie movie = iMovieRepository.findById(id).orElse(null);
         if (movie != null) {
+            movie.setSincePublication(sincePublication(movie.getDate()));
             return ResponseEntity.ok()
                     .body(
                            movie
@@ -86,15 +88,14 @@ public class MovieService {
                 );
     }
 
-    public long calculateDaysSincePublication(Long id) {
-        Movie movie = iMovieRepository.findById(id).orElse(null);
-        if (movie != null) {
-            LocalDate publicationDate = LocalDate.parse(movie.getDate());
-            LocalDate currentDate = LocalDate.now();
-            return ChronoUnit.DAYS.between(publicationDate, currentDate);
-        } else {
-            return -1;
-        }
+    private long sincePublication(Date date) {
+        Date dateSince = new Date();
+        long startTime = date.getTime() ;
+        long endTime = dateSince.getTime();
+        long daySince = (long) Math.floor(startTime / (1000*60*60*24));
+        long daysUntil = (long) Math.floor(endTime / (1000*60*60*24));
+        long days = daysUntil - daySince;
+        return days;
     }
 
 }
