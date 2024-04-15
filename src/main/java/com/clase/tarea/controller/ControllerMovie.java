@@ -1,12 +1,10 @@
 package com.clase.tarea.controller;
 import com.clase.tarea.model.Movie;
-import com.clase.tarea.model.Response;
 import com.clase.tarea.service.MovieService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -27,8 +25,7 @@ public class ControllerMovie {
     }
 
     @GetMapping("/getId/{id}")
-    public Response getId (@PathVariable Long id){ return movieservice.getMovieId(id).getBody(); }
-
+    public Movie getId (@PathVariable Long id){ return movieservice.getMovieId(id).getBody(); }
 
 
     @PutMapping("/updateMovie/{id}")

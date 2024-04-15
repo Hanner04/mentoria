@@ -26,30 +26,20 @@ public class MovieService {
                 .body(
                         Response.builder()
                                 .code(200)
-                                .message("Pelicula agregada")
+                                .message("add movie")
                                 .build()
                 );
     }
 
-    public ResponseEntity<Response> getMovieId(Long id) {
+    public ResponseEntity<Movie> getMovieId(Long id) {
         Movie movie = iMovieRepository.findById(id).orElse(null);
         if (movie != null) {
             return ResponseEntity.ok()
                     .body(
-                            Response.builder()
-                                    .code(200)
-                                    .message("found movie")
-                                    .build()
-                    );
-        } else {
-            return ResponseEntity.status(404)
-                    .body(
-                            Response.builder()
-                                    .code(404)
-                                    .message("movie not found")
-                                    .build()
+                           movie
                     );
         }
+        return null;
     }
 
 
@@ -91,7 +81,7 @@ public class MovieService {
                 .body(
                         Response.builder()
                                 .code(200)
-                                .message("La película ha sido eliminada correctamente")
+                                .message("the movie is deleted")
                                 .build()
                 );
     }

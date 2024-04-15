@@ -29,6 +29,7 @@ public class Products {
     private String name;
     @NotNull
     private String brand;
+    @NotNull
     private double price;
     @NotNull
     private String state;
