@@ -8,6 +8,8 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,10 +30,12 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthService.class);
 
     public ResponseEntity<Object> login(Request request) {
 
         try {
+            LOGGER.info("INFO: Querying token: {} ", request);
 
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUser(), request.getPassword()));
             UserDetails userDetails = iUserRepository.findByUsername(request.getUser())
@@ -45,18 +49,19 @@ public class AuthService {
                                 .message(jwtService.getToken(userDetails))
                                 .build()
                         );
+            }else {
+                LOGGER.error("Authentication Error {}: ", "User not found");
+                return ResponseEntity.status(401)
+                        .body(Response
+                                .builder()
+                                .code(401)
+                                .message("User not found")
+                                .build()
+                        );
+
             }
-
-            return ResponseEntity.status(401)
-                    .body(Response
-                            .builder()
-                            .code(401)
-                            .message("User not found")
-                            .build()
-                    );
-
-
         }catch (AuthenticationException e){
+            LOGGER.error("Authentication Error {}: ", e.getMessage());
             return ResponseEntity.status(401)
                     .body(Response
                             .builder()
@@ -77,6 +82,7 @@ public class AuthService {
 
             if (!violations.isEmpty()) {
                 violations.forEach(violation -> message.set(violation.getMessage()));
+                LOGGER.error("Error: Create user: {} ", message);
                 return ResponseEntity.status(401)
                         .body(Response
                                 .builder()
@@ -85,6 +91,7 @@ public class AuthService {
                                 .build()
                         );
             }else{
+                LOGGER.info("INFO: Create user: {}", userInfo);
                 userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
                 iUserRepository.save(userInfo);
 
@@ -98,6 +105,7 @@ public class AuthService {
 
             }
         }catch (Exception e){
+            LOGGER.error("Error: Create user: {} ", "Duplicate key. This user is already registered.");
             return ResponseEntity.status(401)
                     .body(Response
                             .builder()
