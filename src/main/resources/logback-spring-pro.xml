@@ -1,6 +1,6 @@
 <configuration>
     <property name="LOG_PATTERN" value="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
-    <property name="LOG_HOME" value="C:\\Users\\viva\\Documents\\logs\\%d{yyyy-MM-dd}"/>
+    <property name="LOG_HOME" value="D:\\codigo\\rutas\\logs\\%d{yyyy-MM-dd}"/>
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${LOG_HOME}\log_info_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
