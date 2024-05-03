@@ -17,7 +17,7 @@ public class ConvertFileService {
     public void convert(FilesRequest filesRequest) {
         validateFields(filesRequest);
         validateFileType(filesRequest.getFileName(),filesRequest.getTypeFileOrigin());
-        validateFileNameInPath(filesRequest.getPath(), filesRequest.getFileName());
+        validateFileName(filesRequest.getPath(), filesRequest.getFileName());
 
         InputStream file = iConvertFileRepository.getFile(filesRequest.getPath());
         try {
@@ -27,19 +27,19 @@ public class ConvertFileService {
         }
     }
 
-    private void validateFields(FilesRequest filesRequest) {
+    void validateFields(FilesRequest filesRequest) {
         if (!validateBody(filesRequest)) {
             throw new IllegalArgumentException("INVALID BODY");
         }
     }
 
-    private void validateFileType(String fileName, String typeFileOrigin) {
+    void validateFileType(String fileName, String typeFileOrigin) {
         if (!fileName.endsWith(typeFileOrigin)) {
             throw new IllegalArgumentException("INVALID FILE TYPE");
         }
     }
 
-    private void validateFileNameInPath(String path, String fileName) {
+     void validateFileName(String path, String fileName) {
         String actualFileName = StringUtils.getFilename(path);
         if (!actualFileName.equals(fileName)) {
             throw new IllegalArgumentException("INVALID FILENAME");
